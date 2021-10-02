@@ -1,33 +1,34 @@
-package pjurado.com.ej0102;
+package pjurado.com.ej0102
 
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity
+import android.widget.TextView
+import android.os.Bundle
+import pjurado.com.ej0102.R
+import android.app.Activity
+import android.util.Log
+import android.view.View
+import android.widget.Button
+import pjurado.com.ej0102.databinding.ActivityMainBinding
+import pjurado.com.ej0102.databinding.ActivitySecundarioBinding
 
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
+class ActivitySecundario : AppCompatActivity() {
+    private lateinit var binding: ActivitySecundarioBinding
 
-public class ActivitySecundario extends AppCompatActivity {
-    private Button btnVolver;
-    private TextView tvValor;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_secundario);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivitySecundarioBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        btnVolver = findViewById(R.id.buttonVolver);
-        tvValor = findViewById(R.id.textViewValor);
-        int numero = getIntent().getExtras().getInt("Valor");
-                Log.d("Valor", "Valor" + getIntent().getExtras().getInt("Valor"));
-        tvValor.setText(String.valueOf(numero+1));
-        btnVolver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setResult(RESULT_OK, getIntent());
-                finish();
-            }
-        });
+
+        val numero = intent.extras!!.getInt("Valor")
+        val requestCode = intent.extras!!.getInt("requestCode")
+        Log.d("Valor", "Valor" + intent.extras!!.getInt("Valor"))
+        binding.textViewValor.setText((numero + 1).toString())
+        binding.buttonVolver.setOnClickListener(View.OnClickListener {
+            intent.putExtra("resultCode", "0")
+            setResult(RESULT_OK, intent)
+            finish()
+        })
     }
 }
